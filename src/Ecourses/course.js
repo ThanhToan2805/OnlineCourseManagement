@@ -1,6 +1,9 @@
-import React from "react";
+import React, {use, useEffect, useState} from "react";
+import axios from "axios";
 import Header from "./header";
 import Footer from "./footer";
+import { response } from "express";
+import { error } from "jquery";
 
 const Head = () => {
     return(
@@ -67,7 +70,17 @@ const Category = () => {
 };
 
 const Courses = () => {
-    return(
+    const [courses, setCourses] = useState([]);
+    
+    useEffect(() => {
+        axios.get('http:localhost:5000/api/khoahoc').then(response => {
+            setCourses(response.data);
+        }).catch(error => {
+            console.error('There was an error fetching the courses!', error);
+        });
+    }, []);
+
+    return (
         <div className="container-fluid py-5">
             <div className="container py-5">
                 <div className="text-center mb-5">
@@ -75,27 +88,20 @@ const Courses = () => {
                     <h1>Our Popular Courses</h1>
                 </div>
                 <div className="row">
-                    {[
-                        { img: "course-1.jpg", title: "Web design & development courses for beginner", students: 25, time: "01h 30m", rating: 4.5, reviews: 250, price: "$99" },
-                        { img: "course-2.jpg", title: "Web design & development courses for beginner", students: 25, time: "01h 30m", rating: 4.5, reviews: 250, price: "$99" },
-                        { img: "course-3.jpg", title: "Web design & development courses for beginner", students: 25, time: "01h 30m", rating: 4.5, reviews: 250, price: "$99" },
-                        { img: "course-4.jpg", title: "Web design & development courses for beginner", students: 25, time: "01h 30m", rating: 4.5, reviews: 250, price: "$99" },
-                        { img: "course-5.jpg", title: "Web design & development courses for beginner", students: 25, time: "01h 30m", rating: 4.5, reviews: 250, price: "$99" },
-                        { img: "course-6.jpg", title: "Web design & development courses for beginner", students: 25, time: "01h 30m", rating: 4.5, reviews: 250, price: "$99" },
-                    ].map((course, index) => (
+                    {courses.map((course, index) => (
                         <div key={index} className="col-lg-4 col-md-6 mb-4">
                             <div className="rounded overflow-hidden mb-2">
-                                <img className="img-fluid" src={`/img/${course.img}`} alt="" />
+                                {/* Giả sử dữ liệu trả về có trường 'img' là đường dẫn đến ảnh */}
+                                <img className="img-fluid" src={`/img/${course.anh}`} alt={course.tenkh} />
                                 <div className="bg-secondary p-4">
                                     <div className="d-flex justify-content-between mb-3">
-                                        <small className="m-0"><i className="fa fa-users text-primary mr-2"></i>{course.students} Students</small>
-                                        <small className="m-0"><i className="far fa-clock text-primary mr-2"></i>{course.time}</small>
+                                        {/* <small className="m-0"><i className="fa fa-users text-primary mr-2"></i>{course.students} Students</small> */}
+                                        <small className="m-0"><i className="far fa-clock text-primary mr-2"></i>{course.thoigian}</small>
                                     </div>
-                                    <a className="h5" href="">{course.title}</a>
+                                    <a className="h5" href="">{course.tenkh}</a>
                                     <div className="border-top mt-4 pt-4">
                                         <div className="d-flex justify-content-between">
-                                            <h6 className="m-0"><i className="fa fa-star text-primary mr-2"></i>{course.rating} <small>({course.reviews})</small></h6>
-                                            <h5 className="m-0">{course.price}</h5>
+                                            <h5 className="m-0">{course.giakh}</h5>
                                         </div>
                                     </div>
                                 </div>
