@@ -1,4 +1,5 @@
 import React from "react";
+
 const Topbar = () => {
     return (
         <div className="container-fluid d-none d-lg-block">
@@ -12,8 +13,8 @@ const Topbar = () => {
                     <div className="d-inline-flex align-items-center">
                         <i className="fa fa-2x fa-map-marker-alt text-primary mr-3"></i>
                         <div className="text-left">
-                            <h6 className="font-weight-semi-bold mb-1">Our Office</h6>
-                            <small>123 Street, New York, USA</small>
+                            <h6 className="font-weight-semi-bold mb-1">Văn phòng</h6>
+                            <small>123 Phan Văn Trị, Quận Gò Vấp, thành phố Hồ Chí Minh</small>
                         </div>
                     </div>
                 </div>
@@ -21,8 +22,8 @@ const Topbar = () => {
                     <div className="d-inline-flex align-items-center">
                         <i className="fa fa-2x fa-envelope text-primary mr-3"></i>
                         <div className="text-left">
-                            <h6 className="font-weight-semi-bold mb-1">Email Us</h6>
-                            <small>info@example.com</small>
+                            <h6 className="font-weight-semi-bold mb-1">Emaill</h6>
+                            <small>ecoursesonl@gmailgmail.com</small>
                         </div>
                     </div>
                 </div>
@@ -30,8 +31,8 @@ const Topbar = () => {
                     <div className="d-inline-flex align-items-center">
                         <i className="fa fa-2x fa-phone text-primary mr-3"></i>
                         <div className="text-left">
-                            <h6 className="font-weight-semi-bold mb-1">Call Us</h6>
-                            <small>+012 345 6789</small>
+                            <h6 className="font-weight-semi-bold mb-1">Liên hệ</h6>
+                            <small>0915026830</small>
                         </div>
                     </div>
                 </div>
@@ -52,7 +53,7 @@ const Navbar = () => {
                         style={{ height: '67px', padding: '0 30px' }}
                     >
                         <h5 className="text-primary m-0">
-                            <i className="fa fa-book-open mr-2"></i>Subjects
+                            <i className="fa fa-book-open mr-2"></i>Chủ đề
                         </h5>
                         <i className="fa fa-angle-down text-primary"></i>
                     </a>
@@ -64,7 +65,7 @@ const Navbar = () => {
                         <div className="navbar-nav w-100">
                             <div className="nav-item dropdown">
                                 <a href="#" className="nav-link" data-toggle="dropdown">
-                                    Web Design <i className="fa fa-angle-down float-right mt-1"></i>
+                                    Websites <i className="fa fa-angle-down float-right mt-1"></i>
                                 </a>
                                 <div className="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
                                     <a href="" className="dropdown-item">HTML</a>
@@ -72,9 +73,9 @@ const Navbar = () => {
                                     <a href="" className="dropdown-item">jQuery</a>
                                 </div>
                             </div>
-                            <a href="" className="nav-item nav-link">Apps Design</a>
+                            <a href="" className="nav-item nav-link">Apps</a>
                             <a href="" className="nav-item nav-link">Marketing</a>
-                            <a href="" className="nav-item nav-link">Research</a>
+                            <a href="" className="nav-item nav-link">Nghiên cứu</a>
                             <a href="" className="nav-item nav-link">SEO</a>
                         </div>
                     </nav>
@@ -91,14 +92,14 @@ const Navbar = () => {
                         </button>
                         <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div className="navbar-nav py-0">
-                                <a href="/" className="nav-item nav-link active">Home</a>
-                                <a href="/about" className="nav-item nav-link">About</a>
-                                <a href="/course" className="nav-item nav-link">Courses</a>
-                                <a href="/teacher" className="nav-item nav-link">Teachers</a>
-                                <a href="/contact" className="nav-item nav-link">Contact</a>
+                                <a href="/" className="nav-item nav-link active">Trang chủ</a>
+                                <a href="/about" className="nav-item nav-link">Giới thiệu</a>
+                                <a href="/course" className="nav-item nav-link">Khóa học</a>
+                                <a href="/teacher" className="nav-item nav-link">Giảng viên</a>
+                                <a href="/contact" className="nav-item nav-link">Liên hệ</a>
                             </div>
                             <a className="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="">
-                                Join Now
+                                Tham gia ngay
                             </a>
                         </div>
                     </nav>

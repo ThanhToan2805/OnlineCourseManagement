@@ -19,9 +19,9 @@ const Carousel = () => {
             />
             <div className="carousel-caption d-flex align-items-center justify-content-center">
               <div className="p-5" style={{ width: '100%', maxWidth: '900px' }}>
-                <h5 className="text-white text-uppercase mb-md-3">Best Online Courses</h5>
-                <h1 className="display-3 text-white mb-md-4">Best Education From Your Home</h1>
-                <a href="" className="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">
+                <h5 className="text-white text-uppercase mb-md-3">Nền tảng học online tốt nhất</h5>
+                <h1 className="display-3 text-white mb-md-4">Tiện lợi hơn khi học tại nhà</h1>
+                <a href="/course" className="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">
                   Learn More
                 </a>
               </div>
@@ -36,9 +36,9 @@ const Carousel = () => {
             />
             <div className="carousel-caption d-flex align-items-center justify-content-center">
               <div className="p-5" style={{ width: '100%', maxWidth: '900px' }}>
-                <h5 className="text-white text-uppercase mb-md-3">Best Online Courses</h5>
-                <h1 className="display-3 text-white mb-md-4">Best Online Learning Platform</h1>
-                <a href="" className="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">
+                <h5 className="text-white text-uppercase mb-md-3">Nền tảng học online tốt nhất</h5>
+                <h1 className="display-3 text-white mb-md-4">Các khóa học trực tuyến hiệu quả</h1>
+                <a href="course" className="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">
                   Learn More
                 </a>
               </div>
@@ -53,10 +53,10 @@ const Carousel = () => {
             />
             <div className="carousel-caption d-flex align-items-center justify-content-center">
               <div className="p-5" style={{ width: '100%', maxWidth: '900px' }}>
-                <h5 className="text-white text-uppercase mb-md-3">Best Online Courses</h5>
-                <h1 className="display-3 text-white mb-md-4">New Way To Learn From Home</h1>
-                <a href="" className="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">
-                  Learn More
+                <h5 className="text-white text-uppercase mb-md-3">Nền tảng học online tốt nhất</h5>
+                <h1 className="display-3 text-white mb-md-4">Sự hỗ trợ không thể thiếu cho các sinh viên</h1>
+                <a href="/course" className="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">
+                  Tìm hiểu thêm
                 </a>
               </div>
             </div>

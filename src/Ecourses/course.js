@@ -1,16 +1,15 @@
 import React, {use, useEffect, useState} from "react";
 import axios from "axios";
-import Header from "./header";
-import Footer from "./footer";
-import { response } from "express";
-import { error } from "jquery";
+import Header from "./header.js";
+import Footer from "./footer.js";
+
 
 const Head = () => {
     return(
         <div className="container-fluid page-header" style={{marginBottom: "90px"}}>
         <div className="container">
             <div className="d-flex flex-column justify-content-center" style={{minHeight: "300px"}}>
-                <h3 className="display-4 text-white text-uppercase">About</h3>
+                <h3 className="display-4 text-white text-uppercase">Courses</h3>
                 <div className="d-inline-flex text-white">
                     <p className="m-0 text-uppercase"><a className="text-white" href="">Home</a></p>
                     <i className="fa fa-angle-double-right pt-1 px-3"></i>
@@ -73,7 +72,7 @@ const Courses = () => {
     const [courses, setCourses] = useState([]);
     
     useEffect(() => {
-        axios.get('http:localhost:5000/api/khoahoc').then(response => {
+        axios.get('http://localhost:5000/api/khoahoc').then(response => {
             setCourses(response.data);
         }).catch(error => {
             console.error('There was an error fetching the courses!', error);
@@ -91,7 +90,7 @@ const Courses = () => {
                     {courses.map((course, index) => (
                         <div key={index} className="col-lg-4 col-md-6 mb-4">
                             <div className="rounded overflow-hidden mb-2">
-                                {/* Giả sử dữ liệu trả về có trường 'img' là đường dẫn đến ảnh */}
+                                {/* Ensure course.anh contains the correct path */}
                                 <img className="img-fluid" src={`/img/${course.anh}`} alt={course.tenkh} />
                                 <div className="bg-secondary p-4">
                                     <div className="d-flex justify-content-between mb-3">
@@ -101,7 +100,9 @@ const Courses = () => {
                                     <a className="h5" href="">{course.tenkh}</a>
                                     <div className="border-top mt-4 pt-4">
                                         <div className="d-flex justify-content-between">
-                                            <h5 className="m-0">{course.giakh}</h5>
+                                        <h5 className="m-0">
+                                            {new Intl.NumberFormat('vi-VN').format(course.giakh)} VND
+                                        </h5>
                                         </div>
                                     </div>
                                 </div>

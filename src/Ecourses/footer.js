@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 
 const Footer = () => {
     return (
@@ -9,16 +9,16 @@ const Footer = () => {
               <div className="row">
                 <div className="col-md-6 mb-5">
                   <h5 className="text-primary text-uppercase mb-4" style={{ letterSpacing: "5px" }}>
-                    Get In Touch
+                    Liên hệ
                   </h5>
                   <p>
-                    <i className="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA
+                    <i className="fa fa-map-marker-alt mr-2"></i>123 Phan Văn Trị, Quận Gò Vấp, thành phố Hồ Chí Minh
                   </p>
                   <p>
-                    <i className="fa fa-phone-alt mr-2"></i>+012 345 67890
+                    <i className="fa fa-phone-alt mr-2"></i>0915026830
                   </p>
                   <p>
-                    <i className="fa fa-envelope mr-2"></i>info@example.com
+                    <i className="fa fa-envelope mr-2"></i>ecoursesonl@gmailgmail.com
                   </p>
                   <div className="d-flex justify-content-start mt-4">
                     <a className="btn btn-outline-light btn-square mr-2" href="#">
@@ -37,10 +37,10 @@ const Footer = () => {
                 </div>
                 <div className="col-md-6 mb-5">
                   <h5 className="text-primary text-uppercase mb-4" style={{ letterSpacing: "5px" }}>
-                    Our Courses
+                    Các chủ đề
                   </h5>
                   <div className="d-flex flex-column justify-content-start">
-                    {["Web Design", "Apps Design", "Marketing", "Research", "SEO"].map((course, index) => (
+                    {["Websites", "Games", "Apps", "Marketing", "Research", "SEO"].map((course, index) => (
                       <a key={index} className="text-white mb-2" href="#">
                         <i className="fa fa-angle-right mr-2"></i>{course}
                       </a>
@@ -51,17 +51,17 @@ const Footer = () => {
             </div>
             <div className="col-lg-5 col-md-12 mb-5">
               <h5 className="text-primary text-uppercase mb-4" style={{ letterSpacing: "5px" }}>
-                Newsletter
+                Bản tin
               </h5>
               <p>
-                Rebum labore lorem dolores kasd est, et ipsum amet et at kasd, ipsum sea tempor magna tempor.
-                Accu kasd sed ea duo ipsum. Dolor duo eirmod sea justo no lorem est diam
+                Đăng ký nhận bản tin để cập nhật những thông tin mới nhất. Nhận thông báo về các khóa học, chương trình khuyến mãi,
+                và nhiều hơn nữa. Đừng bỏ lỡ cơ hội!
               </p>
               <div className="w-100">
                 <div className="input-group">
-                  <input type="text" className="form-control border-light" style={{ padding: "30px" }} placeholder="Your Email Address" />
+                  <input type="text" className="form-control border-light" style={{ padding: "30px" }} placeholder="Email" />
                   <div className="input-group-append">
-                    <button className="btn btn-primary px-4">Sign Up</button>
+                    <button className="btn btn-primary px-4">Đăng ký</button>
                   </div>
                 </div>
               </div>

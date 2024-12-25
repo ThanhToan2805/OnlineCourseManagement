@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import $ from 'jquery';
 import 'owl.carousel'; 
 import 'jquery.easing';
 
-import Home from './Ecourses/home';
-import reportWebVitals from './reportWebVitals';
+import Home from './Ecourses/home.js';
+import reportWebVitals from './reportWebVitals.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
