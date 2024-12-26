@@ -7,11 +7,11 @@ const Head = () => {
         <div className="container-fluid page-header" style={{marginBottom: "90px"}}>
         <div className="container">
             <div className="d-flex flex-column justify-content-center" style={{minHeight: "300px"}}>
-                <h3 className="display-4 text-white text-uppercase">Contact</h3>
+                <h3 className="display-4 text-white text-uppercase">Liên hệ</h3>
                 <div className="d-inline-flex text-white">
-                    <p className="m-0 text-uppercase"><a className="text-white" href="">Home</a></p>
+                    <p className="m-0 text-uppercase"><a className="text-white" href="/">Trang chủ</a></p>
                     <i className="fa fa-angle-double-right pt-1 px-3"></i>
-                    <p className="m-0 text-uppercase">Contact</p>
+                    <p className="m-0 text-uppercase">Liên hệ</p>
                 </div>
             </div>
         </div>
@@ -31,9 +31,9 @@ const Contact = () => {
                             className="text-primary text-uppercase mb-3"
                             style={{ letterSpacing: 5 }}
                         >
-                            Contact
+                            Liên hệ
                         </h5>
-                        <h1>Contact For Any Query</h1>
+                        <h1>Liên hệ để được hỗ trợ</h1>
                     </div>
                     <div className="row justify-content-center">
                         <div className="col-lg-8">
@@ -45,7 +45,18 @@ const Contact = () => {
                                             type="text"
                                             className="form-control border-0 p-4"
                                             id="name"
-                                            placeholder="Your Name"
+                                            placeholder="Họ"
+                                            required="required"
+                                            data-validation-required-message="Please enter your name"
+                                        />
+                                        <p className="help-block text-danger" />
+                                    </div>
+                                    <div className="control-group">
+                                        <input
+                                            type="text"
+                                            className="form-control border-0 p-4"
+                                            id="name"
+                                            placeholder="Tên"
                                             required="required"
                                             data-validation-required-message="Please enter your name"
                                         />
@@ -56,7 +67,7 @@ const Contact = () => {
                                             type="email"
                                             className="form-control border-0 p-4"
                                             id="email"
-                                            placeholder="Your Email"
+                                            placeholder="Email"
                                             required="required"
                                             data-validation-required-message="Please enter your email"
                                         />
@@ -67,7 +78,7 @@ const Contact = () => {
                                             type="text"
                                             className="form-control border-0 p-4"
                                             id="subject"
-                                            placeholder="Subject"
+                                            placeholder="Tiêu đề"
                                             required="required"
                                             data-validation-required-message="Please enter a subject"
                                         />
@@ -78,7 +89,7 @@ const Contact = () => {
                                             className="form-control border-0 py-3 px-4"
                                             rows={5}
                                             id="message"
-                                            placeholder="Message"
+                                            placeholder="Lời nhắn"
                                             required="required"
                                             data-validation-required-message="Please enter your message"
                                             defaultValue={""}
@@ -91,7 +102,7 @@ const Contact = () => {
                                             type="submit"
                                             id="sendMessageButton"
                                         >
-                                            Send Message
+                                            Gửi
                                         </button>
                                     </div>
                                 </form>

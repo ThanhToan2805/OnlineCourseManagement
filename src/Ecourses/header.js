@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Topbar = () => {
     return (
@@ -42,6 +43,25 @@ const Topbar = () => {
 };
 
 const Navbar = () => {
+    const [user, setUser] = useState(null); // Quản lý trạng thái người dùng
+    const navigate = useNavigate();
+
+    // Lấy thông tin người dùng từ localStorage khi component được render
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (storedUser) {
+            setUser(storedUser);
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        setUser(null);
+        navigate('/login'); // Điều hướng về trang đăng nhập sau khi đăng xuất
+    };
+
+    const userName = user ? `${user.tennd}` : '';
+
     return (
         <div className="container-fluid">
             <div className="row border-top px-xl-5">
@@ -63,20 +83,14 @@ const Navbar = () => {
                         style={{ width: 'calc(100% - 30px)', zIndex: 9 }}
                     >
                         <div className="navbar-nav w-100">
-                            <div className="nav-item dropdown">
-                                <a href="#" className="nav-link" data-toggle="dropdown">
-                                    Websites <i className="fa fa-angle-down float-right mt-1"></i>
-                                </a>
-                                <div className="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
-                                    <a href="" className="dropdown-item">HTML</a>
-                                    <a href="" className="dropdown-item">CSS</a>
-                                    <a href="" className="dropdown-item">jQuery</a>
-                                </div>
-                            </div>
-                            <a href="" className="nav-item nav-link">Apps</a>
-                            <a href="" className="nav-item nav-link">Marketing</a>
-                            <a href="" className="nav-item nav-link">Nghiên cứu</a>
+                            <a href="" className="nav-item nav-link">Phát triển ứng dụng web</a>
+                            <a href="" className="nav-item nav-link">Kỹ thuật phần mềm</a>
+                            <a href="" className="nav-item nav-link">Khoa học dữ liệu</a>
                             <a href="" className="nav-item nav-link">SEO</a>
+                            <a href="" className="nav-item nav-link">Khoa học máy tính</a>
+                            <a href="" className="nav-item nav-link">An toàn thông tin</a>
+                            <a href="" className="nav-item nav-link">Điện toán đám mây</a>
+                            <a href="" className="nav-item nav-link">Mạng máy tính</a>
                         </div>
                     </nav>
                 </div>
@@ -92,15 +106,31 @@ const Navbar = () => {
                         </button>
                         <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div className="navbar-nav py-0">
-                                <a href="/" className="nav-item nav-link active">Trang chủ</a>
-                                <a href="/about" className="nav-item nav-link">Giới thiệu</a>
-                                <a href="/course" className="nav-item nav-link">Khóa học</a>
-                                <a href="/teacher" className="nav-item nav-link">Giảng viên</a>
-                                <a href="/contact" className="nav-item nav-link">Liên hệ</a>
+                                <NavLink to="/" className="nav-item nav-link" activeClassName="active">Trang chủ</NavLink>
+                                <NavLink to="/about" className="nav-item nav-link" activeClassName="active">Giới thiệu</NavLink>
+                                <NavLink to="/course" className="nav-item nav-link" activeClassName="active">Khóa học</NavLink>
+                                <NavLink to="/teacher" className="nav-item nav-link" activeClassName="active">Giảng viên</NavLink>
+                                <NavLink to="/contact" className="nav-item nav-link" activeClassName="active">Liên hệ</NavLink>
                             </div>
-                            <a className="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="">
-                                Tham gia ngay
-                            </a>
+
+                            {/* Kiểm tra trạng thái người dùng để hiển thị nội dung động */}
+                            {user ? (
+                                <div className="ml-auto d-none d-lg-block">
+                                    <div className="dropdown">
+                                        <button className="btn btn-primary dropdown-toggle" type="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            {`Xin chào, ${userName}`}
+                                        </button>
+                                        <div className="dropdown-menu" aria-labelledby="userDropdown">
+                                            <NavLink to="/profile" className="dropdown-item">Thông tin cá nhân</NavLink>
+                                            <button className="dropdown-item" onClick={handleLogout}>Đăng xuất</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <a className="btn btn-primary py-2 px-4 ml-auto d-none d-lg-block" href="/login">
+                                    Tham gia ngay
+                                </a>
+                            )}
                         </div>
                     </nav>
                 </div>

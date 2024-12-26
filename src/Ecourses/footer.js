@@ -40,7 +40,7 @@ const Footer = () => {
                     Các chủ đề
                   </h5>
                   <div className="d-flex flex-column justify-content-start">
-                    {["Websites", "Games", "Apps", "Marketing", "Research", "SEO"].map((course, index) => (
+                    {["Phát triển ứng dụng web", "Kỹ thuật phần mềm", "Khoa học dữ liệu", "SEO", "Khoa học máy tính", "An toàn thông tin", "Điện toán đám mây", "Mạng máy tính"].map((course, index) => (
                       <a key={index} className="text-white mb-2" href="#">
                         <i className="fa fa-angle-right mr-2"></i>{course}
                       </a>

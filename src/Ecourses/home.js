@@ -7,6 +7,8 @@ import About from "./about.js";
 import Course from "./course.js";
 import Teacher from "./teacher.js";
 import Contact from "./contact.js";
+import Login from "./login.js";
+import SignUp from "./signup.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const HomePage = () => {
@@ -29,6 +31,8 @@ const Home = () => {
                 <Route path="/course" element={<Course />}/>
                 <Route path="/teacher" element={<Teacher />}/>
                 <Route path="/contact" element={<Contact />}/>
+                <Route path="/login" element={<Login />}/>
+                <Route path="/signup" element={<SignUp />}/>
             </Routes>
         </BrowserRouter>
     );
