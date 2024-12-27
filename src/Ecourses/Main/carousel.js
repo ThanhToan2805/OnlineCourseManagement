@@ -22,7 +22,7 @@ const Carousel = () => {
                 <h5 className="text-white text-uppercase mb-md-3">Nền tảng học online tốt nhất</h5>
                 <h1 className="display-3 text-white mb-md-4">Tiện lợi hơn khi học tại nhà</h1>
                 <a href="/course" className="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">
-                  Learn More
+                  Tìm hiểu thêm
                 </a>
               </div>
             </div>
@@ -39,7 +39,7 @@ const Carousel = () => {
                 <h5 className="text-white text-uppercase mb-md-3">Nền tảng học online tốt nhất</h5>
                 <h1 className="display-3 text-white mb-md-4">Các khóa học trực tuyến hiệu quả</h1>
                 <a href="course" className="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">
-                  Learn More
+                  Tìm hiểu thêm
                 </a>
               </div>
             </div>

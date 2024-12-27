@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'owl.carousel'; 
 import 'jquery.easing';
 
-import Home from './Ecourses/home.js';
+import Home from './Ecourses/Main/home.js';
 import reportWebVitals from './reportWebVitals.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

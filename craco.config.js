@@ -1,6 +1,6 @@
-const webpack = require('webpack');
+import webpack from 'webpack';
 
-module.exports = {
+export default {
   webpack: {
     configure: (webpackConfig) => {
       webpackConfig.resolve.fallback = {
@@ -17,7 +17,7 @@ module.exports = {
         stream: require.resolve('stream'), // Polyfill for 'stream'
         path: require.resolve('path'), // Polyfill for 'path'
         crypto: require.resolve('crypto-browserify'), // Polyfill for 'crypto'
-        util: require.resolve('util/')
+        util: require.resolve('util/'),
       };
 
       // Provide the process browser polyfill globally
@@ -29,7 +29,7 @@ module.exports = {
       ];
 
       webpackConfig.externals = {
-        express: 'commonjs express'  // This excludes express from being bundled
+        express: 'commonjs express', // This excludes express from being bundled
       };
 
       return webpackConfig;

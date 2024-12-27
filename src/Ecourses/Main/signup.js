@@ -10,32 +10,40 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         if (password !== confirmPassword) {
             alert('Mật khẩu không khớp');
             return;
         }
-
+    
         const userData = {
             hond: firstName,
             tennd: lastName,
             email: email,
             password: password,
         };
-
+    
         try {
             const response = await axios.post('http://localhost:5000/api/signup', userData);
+            setIsLoading(false);
+    
             if (response.data.success) {
                 alert('Đăng ký thành công');
+                const mand = response.data.mand; // Lấy ID của người dùng từ response
+                const masinhvien = response.data.masinhvien; // Lấy mã sinh viên từ response
+    
+                // Sau khi thêm người dùng và sinh viên thành công, chuyển hướng đến trang đăng nhập
                 navigate('/login');
             } else {
                 alert(response.data.message);
             }
         } catch (error) {
+            setIsLoading(false);
             console.error('Error during registration:', error);
             alert('Xảy ra lỗi trong quá trình đăng ký.');
         }
@@ -181,8 +189,12 @@ const SignUp = () => {
                                             ></i>
                                         </div>
                                         <div>
-                                            <button className="btn btn-dark btn-block border-0 py-3" type="submit">
-                                                Đăng ký ngay
+                                        <button 
+                                                className="btn btn-dark btn-block border-0 py-3" 
+                                                type="submit"
+                                                disabled={isLoading} // Disable button while loading
+                                            >
+                                                {isLoading ? 'Đang đăng ký...' : 'Đăng ký ngay'}
                                             </button>
                                         </div>
                                     </form>

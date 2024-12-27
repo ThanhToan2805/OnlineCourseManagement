@@ -9,6 +9,8 @@ import Teacher from "./teacher.js";
 import Contact from "./contact.js";
 import Login from "./login.js";
 import SignUp from "./signup.js";
+import RegisteredCourses from "./registered_courses.js";
+import WebDev from "./web_dev.js";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 const HomePage = () => {
@@ -33,6 +35,8 @@ const Home = () => {
                 <Route path="/contact" element={<Contact />}/>
                 <Route path="/login" element={<Login />}/>
                 <Route path="/signup" element={<SignUp />}/>
+                <Route path="/registered_courses" element={<RegisteredCourses />}/>
+                <Route path="/web_dev/:macd" element={<WebDev />}/>
             </Routes>
         </BrowserRouter>
     );

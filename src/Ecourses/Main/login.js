@@ -24,8 +24,11 @@ const Login = () => {
 
                 // Đăng nhập thành công
                 localStorage.setItem('user', JSON.stringify(userData));
+                localStorage.setItem('isLoggedIn', 'true');
                 alert(response.data.message);
                 navigate('/'); // Chuyển đến trang chủ hoặc trang khác sau khi đăng nhập
+            } else {
+                alert(response.data.message);
             }
         } catch (error) {
             if (error.response) {

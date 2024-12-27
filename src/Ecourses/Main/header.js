@@ -23,8 +23,8 @@ const Topbar = () => {
                     <div className="d-inline-flex align-items-center">
                         <i className="fa fa-2x fa-envelope text-primary mr-3"></i>
                         <div className="text-left">
-                            <h6 className="font-weight-semi-bold mb-1">Emaill</h6>
-                            <small>ecoursesonl@gmailgmail.com</small>
+                            <h6 className="font-weight-semi-bold mb-1">Email</h6>
+                            <small>ecourses@gmail.com</small>
                         </div>
                     </div>
                 </div>
@@ -67,10 +67,10 @@ const Navbar = () => {
             <div className="row border-top px-xl-5">
                 <div className="col-lg-3 d-none d-lg-block">
                     <a
-                        className="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none"
+                        className="d-flex align-items-center justify-content-between w-100 text-decoration-none"
                         data-toggle="collapse"
                         href="#navbar-vertical"
-                        style={{ height: '67px', padding: '0 30px' }}
+                        style={{ height: '67px', padding: '0 30px', backgroundColor: '#f5f5f5' }}
                     >
                         <h5 className="text-primary m-0">
                             <i className="fa fa-book-open mr-2"></i>Chủ đề
@@ -83,7 +83,7 @@ const Navbar = () => {
                         style={{ width: 'calc(100% - 30px)', zIndex: 9 }}
                     >
                         <div className="navbar-nav w-100">
-                            <a href="" className="nav-item nav-link">Phát triển ứng dụng web</a>
+                            <a href="/web_dev" className="nav-item nav-link">Phát triển ứng dụng web</a>
                             <a href="" className="nav-item nav-link">Kỹ thuật phần mềm</a>
                             <a href="" className="nav-item nav-link">Khoa học dữ liệu</a>
                             <a href="" className="nav-item nav-link">SEO</a>
@@ -122,6 +122,7 @@ const Navbar = () => {
                                         </button>
                                         <div className="dropdown-menu" aria-labelledby="userDropdown">
                                             <NavLink to="/profile" className="dropdown-item">Thông tin cá nhân</NavLink>
+                                            <NavLink to="/registered_courses" className="dropdown-item">Khóa học đã đăng ký</NavLink>
                                             <button className="dropdown-item" onClick={handleLogout}>Đăng xuất</button>
                                         </div>
                                     </div>
