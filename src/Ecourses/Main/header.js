@@ -84,13 +84,13 @@ const Navbar = () => {
                     >
                         <div className="navbar-nav w-100">
                             <a href="/web_dev" className="nav-item nav-link">Phát triển ứng dụng web</a>
-                            <a href="" className="nav-item nav-link">Kỹ thuật phần mềm</a>
-                            <a href="" className="nav-item nav-link">Khoa học dữ liệu</a>
-                            <a href="" className="nav-item nav-link">SEO</a>
-                            <a href="" className="nav-item nav-link">Khoa học máy tính</a>
-                            <a href="" className="nav-item nav-link">An toàn thông tin</a>
-                            <a href="" className="nav-item nav-link">Điện toán đám mây</a>
-                            <a href="" className="nav-item nav-link">Mạng máy tính</a>
+                            <a href="/sw_eng" className="nav-item nav-link">Kỹ thuật phần mềm</a>
+                            <a href="/data_sci" className="nav-item nav-link">Khoa học dữ liệu</a>
+                            <a href="/seo" className="nav-item nav-link">SEO</a>
+                            <a href="/comp_sci" className="nav-item nav-link">Khoa học máy tính</a>
+                            <a href="/info_sec" className="nav-item nav-link">An toàn thông tin</a>
+                            <a href="/cloud_comp" className="nav-item nav-link">Điện toán đám mây</a>
+                            <a href="/comp_net" className="nav-item nav-link">Mạng máy tính</a>
                         </div>
                     </nav>
                 </div>

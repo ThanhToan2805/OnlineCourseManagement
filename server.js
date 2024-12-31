@@ -65,6 +65,27 @@ app.get('/api/khoahoc/:macd', async (req, res) => {
     }
 });
 
+app.get('/api/khoahoc/:makh', async (req, res) => {
+    const makh = req.params.makh;
+    console.log('Received macd:', makh);
+    
+    try {
+        const db = await connectDb();
+        const [results] = await db.query('SELECT * FROM khoahoc WHERE makh = ?', [makh]);
+
+        console.log('Results:', results);  // Kiểm tra kết quả truy vấn
+        
+        if (results.length === 0) {
+            return res.status(404).json({ message: "Không tìm thấy khóa học này." });
+        }
+        res.json(results);
+        db.end();
+    } catch (err) {
+        console.error('Error fetching courses:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.get('/api/chude', async (req, res) => {
     try {
         const db = await connectDb();
@@ -152,7 +173,7 @@ app.post('/api/login', async (req, res) => {
     try {
         const db = await connectDb();
 
-        // Check if user exists
+        // Kiểm tra người dùng tồn tại
         const [userResult] = await db.query('SELECT * FROM nguoidung WHERE email = ?', [email]);
         if (userResult.length === 0) {
             return res.status(404).json({ success: false, message: 'Email chưa được đăng ký.' });
@@ -160,9 +181,19 @@ app.post('/api/login', async (req, res) => {
 
         const user = userResult[0];
 
-        // Validate password
+        // Kiểm tra mật khẩu
         if (password === user.password) {
-            return res.status(200).json({ success: true, message: 'Đăng nhập thành công', email: user.email, tennd: user.tennd });
+            // Nếu mật khẩu đúng, kiểm tra vai trò của người dùng
+            const role = user.vaitro;  // Vai trò người dùng (ví dụ: 'Quản trị viên', 'Giảng viên', 'Sinh viên')
+
+            // Trả về kết quả đăng nhập và vai trò của người dùng
+            return res.status(200).json({
+                success: true,
+                message: 'Đăng nhập thành công',
+                email: user.email,
+                tennd: user.tennd,
+                vaitro: role  // Thêm vai trò vào phản hồi
+            });
         } else {
             return res.status(401).json({ success: false, message: 'Mật khẩu không chính xác' });
         }
@@ -251,6 +282,68 @@ app.post('/api/dangky_khoahoc', async (req, res) => {
     } catch (error) {
         console.error('Error during course registration:', error);
         res.status(500).json({ message: 'Xảy ra lỗi khi đăng ký khóa học.' });
+    }
+});
+
+app.get('/api/nguoidung', async (req, res) => {
+    try {
+        const db = await connectDb();
+        const [results] = await db.query('SELECT * FROM nguoidung');
+        res.json(results);
+        db.end();
+    } catch (err) {
+        console.error('Error fetching users:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// API xóa người dùng theo ID
+app.delete('/api/nguoidung/:id', async (req, res) => {
+    const userId = req.params.id;
+
+    try {
+        const db = await connectDb();
+        
+        // Xóa người dùng theo ID
+        const [result] = await db.query('DELETE FROM nguoidung WHERE mand = ?', [userId]);
+        
+        if (result.affectedRows > 0) {
+            res.status(200).json({ message: 'Xóa người dùng thành công' });
+        } else {
+            res.status(404).json({ message: 'User not found' });
+        }
+
+        db.end();
+    } catch (err) {
+        console.error('Error deleting user:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.post('/api/nguoidung', async (req, res) => {
+    const { email, password, hond, tennd, sodt, diachi, gioitinh, ngaysinh, vaitro, anhnd } = req.body;
+    try {
+        const db = await connectDb();
+        const result = await db.query(
+            'INSERT INTO nguoidung (email, password, hond, tennd, sodt, diachi, gioitinh, ngaysinh, vaitro, anhnd) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [email, password, hond, tennd, sodt, diachi, gioitinh, ngaysinh, vaitro, anhnd]
+        );
+        res.json({
+            mand: result.insertId, // Chỉ số ID của người dùng vừa thêm
+            email,
+            password,
+            hond,
+            tennd,
+            sodt,
+            diachi,
+            ngaysinh,
+            vaitro,
+            anhnd
+        });
+        db.end();
+    } catch (err) {
+        console.error('Error adding user:', err);
+        res.status(500).json({ error: err.message });
     }
 });
 

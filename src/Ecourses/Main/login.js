@@ -16,17 +16,26 @@ const Login = () => {
             const response = await axios.post('http://localhost:5000/api/login', { email, password });
 
             if (response.data.success) {
-                // Lấy thông tin người dùng từ phản hồi API
+                // Lấy thông tin người dùng và vai trò từ phản hồi API
                 const userData = {
-                    email: response.data.email,   // Lấy họ người dùng
-                    tennd: response.data.tennd, // Lấy tên người dùng
+                    email: response.data.email,   // Lấy email người dùng
+                    tennd: response.data.tennd,   // Lấy tên người dùng
+                    vaitro: response.data.vaitro, // Lấy vai trò người dùng
                 };
 
-                // Đăng nhập thành công
+                // Lưu thông tin người dùng vào localStorage
                 localStorage.setItem('user', JSON.stringify(userData));
                 localStorage.setItem('isLoggedIn', 'true');
                 alert(response.data.message);
-                navigate('/'); // Chuyển đến trang chủ hoặc trang khác sau khi đăng nhập
+
+                // Chuyển hướng người dùng dựa trên vai trò
+                if (response.data.vaitro === 'Quản trị viên') {
+                    // Nếu là quản trị viên, chuyển đến trang admin
+                    navigate('/admin/dashboard');
+                } else {
+                    // Nếu không phải quản trị viên, chuyển đến trang chủ
+                    navigate('/');
+                }
             } else {
                 alert(response.data.message);
             }
@@ -132,7 +141,6 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-
 
             <Footer />
         </>

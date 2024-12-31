@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
-function WebDev() {
+function Subjects() {
     const { macd } = useParams();  // Lấy tham số 'macd' từ URL
     console.log('macd:', macd);
     const [filteredCourses, setFilteredCourses] = useState([]);  // Khóa học đã lọc từ API
@@ -85,4 +84,4 @@ function WebDev() {
     );
 }
 
-export default WebDev;
+export default Subjects;

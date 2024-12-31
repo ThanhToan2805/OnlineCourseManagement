@@ -1,97 +1,19 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import Header from './header.js';
-import Footer from './footer.js';
+import Header from '../Main/header.js';
+import Footer from '../Main/footer.js';
 
-// const RegisteredCourses = ({ idSv }) => {
-//     const [courses, setCourses] = useState([]);
-
-//     useEffect(() => {
-//         const fetchCourses = async () => {
-//             try {
-//                 console.log('ID Sinh viên:', idSv);  // Kiểm tra xem idSv có đúng không
-
-//                 const response = await axios.get(`http://localhost:5000/api/dangky_khoahoc/${idSv}`);
-
-//                 if (response.status === 200) {
-//                     setCourses(response.data); // Dữ liệu trả về từ server
-//                 } else {
-//                     throw new Error('Không thể lấy dữ liệu khóa học.');
-//                 }
-//             } catch (error) {
-//                 console.error('Lỗi khi lấy khóa học:', error);
-//             }
-//         };
-
-//         if (idSv) {  // Chỉ gọi API nếu idSv có giá trị
-//             fetchCourses();
-//         }
-//     }, [idSv]);
-
-//     return (
-//         <>
-//             <Header />
-
-//             <div className="container-fluid page-header" style={{marginBottom: "90px"}}>
-//                 <div className="container">
-//                     <div className="d-flex flex-column justify-content-center" style={{minHeight: "300px"}}>
-//                         <h3 className="display-4 text-white text-uppercase">Khóa học đã đăng ký</h3>
-//                         <div className="d-inline-flex text-white">
-//                             <p className="m-0 text-uppercase"><a className="text-white" href="/">Trang chủ</a></p>
-//                             <i className="fa fa-angle-double-right pt-1 px-3"></i>
-//                             <p className="m-0 text-uppercase">Khóa học đã đăng ký</p>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-
-//             <div>
-//                 <h3>Danh sách khóa học đã đăng ký</h3>
-//                 <ul>
-//                     {courses.map((course, index) => (
-//                         <li key={index}>
-//                             <h4>{course.tenkh}</h4>
-//                             <img src={`/img/${course.anh}`} alt={course.tenkh} />
-//                         </li>
-//                     ))}
-//                 </ul>
-//             </div>
-
-//             <Footer />
-//         </>
-//     );
-// };
-
-const RegisteredCourses = () => {
+const DataSci = () => {
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
         // Dữ liệu tĩnh mô phỏng các khóa học đã đăng ký
         const staticCourses = [
             {
-                tenkh: 'Lập trình web',
-                anh: 'course-1.jpg',
-                ngaybatdau: '2024-09-09',
-                ngayketthuc: '2024-12-24'
-            },
-            {
                 tenkh: 'Trực quan hóa dữ liệu',
                 anh: 'course-5.jpg',
                 ngaybatdau: '2024-09-14',
                 ngayketthuc: '2024-12-28'
             },
-            {
-                tenkh: 'Tính toán song song',
-                anh: 'course-6.jpg',
-                ngaybatdau: '2024-09-12',
-                ngayketthuc: '2024-12-26'
-            },
-            {
-                tenkh: 'Chuyên đề NodeJS & React',
-                anh: 'course-2.jpg',
-                ngaybatdau: '2024-09-10',
-                ngayketthuc: '2024-12-25'
-            }
         ];
 
         // Gán dữ liệu tĩnh vào state
@@ -105,11 +27,11 @@ const RegisteredCourses = () => {
             <div className="container-fluid page-header" style={{marginBottom: "90px"}}>
                 <div className="container">
                     <div className="d-flex flex-column justify-content-center" style={{minHeight: "300px"}}>
-                        <h3 className="display-4 text-white text-uppercase">Khóa học đã đăng ký</h3>
+                        <h3 className="display-4 text-white text-uppercase">Khoa học dữ liệu</h3>
                         <div className="d-inline-flex text-white">
                             <p className="m-0 text-uppercase"><a className="text-white" href="/">Trang chủ</a></p>
                             <i className="fa fa-angle-double-right pt-1 px-3"></i>
-                            <p className="m-0 text-uppercase">Khóa học đã đăng ký</p>
+                            <p className="m-0 text-uppercase">Khoa học dữ liệu</p>
                         </div>
                     </div>
                 </div>
@@ -118,7 +40,8 @@ const RegisteredCourses = () => {
             <div className="container-fluid py-5">
                 <div className="container py-5">
                     <div className="text-center mb-5">
-                        <h1>Danh sách các khóa học đã đăng ký</h1>
+                    <h5 className="text-primary text-uppercase mb-3" style={{ letterSpacing: '5px' }}>Chủ đề</h5>
+                        <h1>Khoa học dữ liệu</h1>
                     </div>
                     <div className="row">
                         {courses.map((course, index) => (
@@ -157,6 +80,4 @@ const RegisteredCourses = () => {
     );
 };
 
-
-
-export default RegisteredCourses;
+export default DataSci;
