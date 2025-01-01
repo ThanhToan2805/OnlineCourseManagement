@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddUser = () => {
   // State để lưu trữ các giá trị của form
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -16,10 +18,6 @@ const AddUser = () => {
     anhnd: "",
     taovaongay: "", // Không cần gửi trường này
   });
-
-  // State để quản lý việc hiển thị mật khẩu
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [repeatPasswordVisible, setRepeatPasswordVisible] = useState(false);
 
   // Hàm xử lý khi người dùng thay đổi giá trị trong form
   const handleChange = (e) => {
@@ -52,6 +50,7 @@ const AddUser = () => {
 
       if (response.ok) {
         alert("Người dùng đã được thêm thành công!");
+        navigate('/admin/users');
         // Reset form sau khi thêm thành công (nếu cần)
         setFormData({
           email: "",
@@ -89,7 +88,6 @@ const AddUser = () => {
             <div className="x_panel">
                 <div className="x_title">
                 <h2>Thông Tin Cá Nhân</h2>
-                <div className="clearfix"></div>
                 </div>
                 <div className="x_content">
                 <form onSubmit={handleSubmit}>
@@ -118,19 +116,13 @@ const AddUser = () => {
                     <div className="col-md-9 col-sm-9">
                         <input
                         id="password"
-                        type={passwordVisible ? "text" : "password"}
+                        type={"password"}
                         className="form-control"
                         name="password"
                         value={formData.password}
                         onChange={handleChange}
                         required
                         />
-                        <i
-                        id="togglePassword"
-                        className={`fa ${passwordVisible ? "fa-eye-slash" : "fa-eye"} position-absolute`}
-                        style={{ right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
-                        onClick={() => setPasswordVisible(!passwordVisible)}
-                        ></i>
                     </div>
                     </div>
 
@@ -142,19 +134,13 @@ const AddUser = () => {
                     <div className="col-md-9 col-sm-9">
                         <input
                         id="confirm_password"
-                        type={repeatPasswordVisible ? "text" : "password"}
+                        type={"password"}
                         className="form-control"
                         name="repeatPassword"
                         value={formData.repeatPassword}
                         onChange={handleChange}
                         required
                         />
-                        <i
-                        id="toggleRepeatPassword"
-                        className={`fa ${repeatPasswordVisible ? "fa-eye-slash" : "fa-eye"} position-absolute`}
-                        style={{ right: '15px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}
-                        onClick={() => setRepeatPasswordVisible(!repeatPasswordVisible)}
-                        ></i>
                     </div>
                     </div>
 

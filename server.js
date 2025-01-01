@@ -32,10 +32,16 @@ const generateStudentCode = async (db) => {
 app.use(cors());
 app.use(bodyParser.json());
 
+// API lấy danh sách khóa họchọc
 app.get('/api/khoahoc', async (req, res) => {
     try {
-        const db = await connectDb();  // Establish connection
-        const [results] = await db.query('SELECT * FROM khoahoc');
+        const db = await connectDb();
+        const query = `
+            SELECT k.makh, k.tenkh, k.ngaybatdau, k.ngayketthuc, k.thoigian, k.lop, k.anh, COUNT(dk.id_sv) AS so_luong_sinhvien
+            FROM khoahoc k LEFT JOIN dangky_khoahoc dk ON k.makh = dk.id_kh
+            GROUP BY k.makh;
+        `;
+        const [results] = await db.query(query);
         res.json(results);
         db.end();
     } catch (err) {
@@ -44,6 +50,35 @@ app.get('/api/khoahoc', async (req, res) => {
     }
 });
 
+// API thực hiện chức năng thêm khóa họchọc
+app.post('/api/khoahoc', async (req, res) => {
+    const { tenkh, giakh, ngaybatdau, ngayketthuc, thoigian, id_gv, macd, lop, anh } = req.body;
+    try {
+        const db = await connectDb();
+        const result = await db.query(
+            'INSERT INTO khoahoc (tenkh, giakh, ngaybatdau, ngayketthuc, thoigian, id_gv, macd, lop, anh) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [tenkh, giakh, ngaybatdau, ngayketthuc, thoigian, id_gv, macd, lop, anh]
+        );
+        res.json({
+            makh: result.insertId, // Chỉ số ID của người dùng vừa thêm
+            tenkh,
+            giakh,
+            ngaybatdau,
+            ngayketthuc,
+            thoigian,
+            id_gv,
+            macd,
+            lop,
+            anh
+        });
+        db.end();
+    } catch (err) {
+        console.error('Error adding course:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Hiển thị khóa học theo mãmã
 app.get('/api/khoahoc/:macd', async (req, res) => {
     const macd = req.params.macd;
     console.log('Received macd:', macd);
@@ -65,31 +100,18 @@ app.get('/api/khoahoc/:macd', async (req, res) => {
     }
 });
 
-app.get('/api/khoahoc/:makh', async (req, res) => {
-    const makh = req.params.makh;
-    console.log('Received macd:', makh);
-    
-    try {
-        const db = await connectDb();
-        const [results] = await db.query('SELECT * FROM khoahoc WHERE makh = ?', [makh]);
 
-        console.log('Results:', results);  // Kiểm tra kết quả truy vấn
-        
-        if (results.length === 0) {
-            return res.status(404).json({ message: "Không tìm thấy khóa học này." });
-        }
-        res.json(results);
-        db.end();
-    } catch (err) {
-        console.error('Error fetching courses:', err);
-        res.status(500).json({ error: err.message });
-    }
-});
-
+// API lấy danh sách chủ đềđề
 app.get('/api/chude', async (req, res) => {
     try {
         const db = await connectDb();
-        const [results] = await db.query('SELECT * FROM chude');
+        const query = `
+            SELECT c.macd, c.tencd, c.anhcd, COUNT(k.makh) AS so_luong_mon
+            FROM chude c
+            LEFT JOIN khoahoc k ON c.macd = k.macd
+            GROUP BY c.macd;
+        `;
+        const [results] = await db.query(query);
         res.json(results);
         db.end();
     } catch (err) {
@@ -98,10 +120,33 @@ app.get('/api/chude', async (req, res) => {
     }
 });
 
+// API thực hiện chức năng thêm chủ đềđề
+app.post('/api/chude', async (req, res) => {
+    const { tencd, anhcd} = req.body;
+    try {
+        const db = await connectDb();
+        const result = await db.query(
+            'INSERT INTO chude (tencd, anhcd) VALUES (?, ?)',
+            [tencd, anhcd]
+        );
+        res.json({
+            macd: result.insertId,
+            tencd,
+            anhcd
+        });
+        db.end();
+    } catch (err) {
+        console.error('Error adding course:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+// API lấy danh sách giảng viên
 app.get('/api/giangvien', async (req, res) => {
     try {
         const db = await connectDb();
-        const [results] = await db.query('SELECT gv.*, nd.hond, nd.tennd, nd.anhnd, nd.vaitro FROM giangvien gv JOIN nguoidung nd ON gv.mand = nd.mand');
+        const [results] = await db.query('SELECT gv.*, nd.email, nd.password, nd.hond, nd.tennd, nd.anhnd, nd.vaitro FROM giangvien gv JOIN nguoidung nd ON gv.mand = nd.mand');
         res.json(results);
         db.end();
     } catch (err) {
@@ -110,28 +155,161 @@ app.get('/api/giangvien', async (req, res) => {
     }
 });
 
-app.post('/api/sinhvien', async (req, res) => {
-    const { mand, masinhvien } = req.body;
-
+// API kiểm tra các giảng viên chưa có trong bảng giangvien
+app.get('/api/giangvien/available', async (req, res) => {
     try {
-        // Thêm sinh viên vào bảng sinhvien
-        const query = `
-            INSERT INTO sinhvien (mand, masinhvien)
-            VALUES (?, ?)
-        `;
-        const [result] = await db.execute(query, [mand, masinhvien]);
-
-        if (result.affectedRows > 0) {
-            res.status(200).json({ message: 'Thêm sinh viên thành công' });
-        } else {
-            res.status(400).json({ message: 'Không thể thêm sinh viên' });
-        }
-    } catch (error) {
-        console.error('Lỗi khi thêm sinh viên:', error);
-        res.status(500).json({ message: 'Lỗi hệ thống' });
+      const db = await connectDb();
+      const [results] = await db.query(`
+        SELECT nd.mand, nd.hond, nd.tennd
+        FROM nguoidung nd
+        LEFT JOIN giangvien gv ON nd.mand = gv.mand
+        WHERE nd.vaitro = 'Giảng viên' AND gv.mand IS NULL
+      `);
+      res.json(results);
+      db.end();
+    } catch (err) {
+      console.error('Error fetching available teachers:', err);
+      res.status(500).json({ error: err.message });
     }
 });
 
+// API thực hiện chức năng thêm giảng viên
+app.post('/api/giangvien', async (req, res) => {
+    const { mand, magiangvien, khoa, anhgv } = req.body;
+    
+    if (!mand || !magiangvien || !khoa || !anhgv) {
+        return res.status(400).json({ message: "Thiếu thông tin giảng viên" });
+    }
+
+    try {
+        const db = await connectDb();
+        
+        // Kiểm tra xem giảng viên đã tồn tại chưa
+        const [existingTeacher] = await db.query(
+            'SELECT * FROM giangvien WHERE mand = ?',
+            [mand]
+        );
+
+        if (existingTeacher.length > 0) {
+            return res.status(400).json({ message: "Giảng viên này đã tồn tại trong hệ thống." });
+        }
+
+        // Thêm giảng viên mới
+        const result = await db.query(
+            'INSERT INTO giangvien (mand, magiangvien, khoa, anhgv) VALUES (?, ?, ?, ?)',
+            [mand, magiangvien, khoa, anhgv]
+        );
+        
+        res.json({
+            message: 'Giảng viên đã được thêm thành công!',
+            data: {
+                id: result.insertId,
+                mand,
+                magiangvien,
+                khoa,
+                anhgv,
+            }
+        });
+
+    } catch (err) {
+        console.error('Error adding teacher:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+// API lấy danh sách sinh viên
+app.get('/api/sinhvien', async (req, res) => {
+    try {
+        const db = await connectDb();
+        const query = `
+            SELECT 
+                sv.mand, 
+                sv.id, 
+                sv.masinhvien, 
+                COUNT(dk.id_kh) AS so_luong_khoahoc,
+                nd.email, 
+                nd.password, 
+                nd.hond, 
+                nd.tennd, 
+                nd.anhnd, 
+                nd.vaitro
+            FROM sinhvien sv
+            LEFT JOIN dangky_khoahoc dk ON sv.id = dk.id_sv
+            JOIN nguoidung nd ON sv.mand = nd.mand
+            GROUP BY sv.id, sv.mand, nd.email, nd.password, nd.hond, nd.tennd, nd.anhnd, nd.vaitro;
+        `;
+        const [results] = await db.query(query);
+        res.json(results);
+        db.end();
+    } catch (err) {
+        console.error('Error fetching students:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// API kiểm tra các sinh viên chưa có trong bảng sinhvien
+app.get('/api/sinhvien/available', async (req, res) => {
+    try {
+      const db = await connectDb();
+      const [results] = await db.query(`
+        SELECT nd.mand, nd.hond, nd.tennd
+        FROM nguoidung nd
+        LEFT JOIN sinhvien sv ON nd.mand = sv.mand
+        WHERE nd.vaitro = 'Sinh viên' AND sv.mand IS NULL
+      `);
+      res.json(results);
+      db.end();
+    } catch (err) {
+      console.error('Error fetching available students:', err);
+      res.status(500).json({ error: err.message });
+    }
+});
+
+// API thực hiện chức năng thêm sinh viên
+app.post('/api/sinhvien', async (req, res) => {
+    const { mand, masinhvien } = req.body;
+    
+    if (!mand || !masinhvien) {
+        return res.status(400).json({ message: "Thiếu thông tin sinh viên" });
+    }
+
+    try {
+        const db = await connectDb();
+        
+        // Kiểm tra xem sinh viên đã tồn tại chưa
+        const [existingStudent] = await db.query(
+            'SELECT * FROM sinhvien WHERE mand = ?',
+            [mand]
+        );
+
+        if (existingStudent.length > 0) {
+            return res.status(400).json({ message: "Sinh viên này đã tồn tại trong hệ thống." });
+        }
+
+        // Thêm sinh viên mới
+        const result = await db.query(
+            'INSERT INTO sinhvien (mand, masinhvien) VALUES (?, ?)',
+            [mand, masinhvien]
+        );
+        
+        res.json({
+            message: 'Sinh viên đã được thêm thành công!',
+            data: {
+                id: result.insertId,
+                mand,
+                masinhvien,
+            }
+        });
+
+    } catch (err) {
+        console.error('Error adding student:', err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+// API đăng ký
 app.post('/api/signup', async (req, res) => {
     const { hond, tennd, email, password } = req.body;
 
@@ -167,6 +345,8 @@ app.post('/api/signup', async (req, res) => {
     }
 });
 
+
+// API đăng nhập
 app.post('/api/login', async (req, res) => {
     const { email, password } = req.body;
 
@@ -205,6 +385,8 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+
+// API hiển thị khóa học theo id sinh viên
 app.get('/api/dangky_khoahoc/:id_sv', async (req, res) => {
     const { idSv } = req.params.id_sv;
 
@@ -230,6 +412,7 @@ app.get('/api/dangky_khoahoc/:id_sv', async (req, res) => {
     }
 });
 
+// API thực hiện chức năng đăng ký khóa học
 app.post('/api/dangky_khoahoc', async (req, res) => {
     const { courseId, email } = req.body;
     console.log('Received data:', { courseId, email });
@@ -285,6 +468,8 @@ app.post('/api/dangky_khoahoc', async (req, res) => {
     }
 });
 
+
+// API lấy danh sách người dùng
 app.get('/api/nguoidung', async (req, res) => {
     try {
         const db = await connectDb();
@@ -320,6 +505,7 @@ app.delete('/api/nguoidung/:id', async (req, res) => {
     }
 });
 
+// API thực hiện chức năng thêm người dùng
 app.post('/api/nguoidung', async (req, res) => {
     const { email, password, hond, tennd, sodt, diachi, gioitinh, ngaysinh, vaitro, anhnd } = req.body;
     try {
@@ -346,6 +532,7 @@ app.post('/api/nguoidung', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

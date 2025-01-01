@@ -1,69 +1,70 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Users = () => {
-    const [users, setUsers] = useState([]);
+const Teachers = () => {
+    const [teachers, setteachers] = useState([]);
     const [search, setSearch] = useState('');
-    const [filteredUsers, setFilteredUsers] = useState([]);
+    const [filteredteachers, setFilteredteachers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const usersPerPage = 5; // Số người dùng hiển thị trên mỗi trang
+    const teachersPerPage = 5; // Số  hiển thị trên mỗi trang
 
     // Lấy dữ liệu từ API khi component mount
     useEffect(() => {
-        axios.get('http://localhost:5000/api/nguoidung')
+        axios.get('http://localhost:5000/api/giangvien')
             .then(response => {
-                setUsers(response.data);
-                setFilteredUsers(response.data);
+                setteachers(response.data);
+                setFilteredteachers(response.data);
             })
             .catch(error => {
-                console.error('There was an error fetching the users!', error);
+                console.error('There was an error fetching the teachers!', error);
             });
     }, []);
 
-    // Hàm tìm kiếm người dùng
+    // Hàm tìm kiếm 
     const handleSearch = (event) => {
         const searchValue = event.target.value.toLowerCase();
         setSearch(searchValue);
-        setFilteredUsers(users.filter(nguoidung =>
-            nguoidung.hond.toLowerCase().includes(searchValue) ||
-            nguoidung.tennd.toLowerCase().includes(searchValue) ||
-            nguoidung.email.toLowerCase().includes(searchValue)
+        setFilteredteachers(teachers.filter(giangvien =>
+            giangvien.hond.toLowerCase().includes(searchValue) ||
+            giangvien.tennd.toLowerCase().includes(searchValue) ||
+            giangvien.email.toLowerCase().includes(searchValue) ||
+            giangvien.magiangvien.toLowerCase().includes(searchValue)
         ));
         setCurrentPage(1); // Reset lại trang hiện tại khi tìm kiếm
     };
 
-    // Tính toán người dùng trên trang hiện tại
-    const indexOfLastUser = currentPage * usersPerPage;
-    const indexOfFirstUser = indexOfLastUser - usersPerPage;
-    const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+    // Tính toán  trên trang hiện tại
+    const indexOfLastStudent = currentPage * teachersPerPage;
+    const indexOfFirstStudent = indexOfLastStudent - teachersPerPage;
+    const currentteachers = filteredteachers.slice(indexOfFirstStudent, indexOfLastStudent);
 
     // Thay đổi trang
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     // Tạo danh sách các nút phân trang
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(filteredUsers.length / usersPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(filteredteachers.length / teachersPerPage); i++) {
         pageNumbers.push(i);
     }
 
     return (
         <div className="container mt-5">
-            <h2 className="text-center mb-4">Quản lý người dùng</h2>
+            <h2 className="text-center mb-4">Quản lý giảng viên</h2>
 
             <div className="row mb-3">
                 <div className="col-md-6">
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="Tìm kiếm người dùng"
+                        placeholder="Tìm kiếm giảng viên"
                         value={search}
                         onChange={handleSearch}
                     />
                 </div>
                 <div className="col-md-6 d-flex justify-content-end">
-                    <a href="/admin/addUser">
+                    <a href="/admin/addTeachers">
                         <button className="btn btn-primary">
-                            Thêm Người Dùng
+                            Thêm Giảng Viên
                         </button>
                     </a>
                 </div>
@@ -76,24 +77,25 @@ const Users = () => {
                         <th>Mật khẩu</th>
                         <th>Họ và đệm</th>
                         <th>Tên</th>
-                        <th>Vai trò</th>
+                        <th>Mã giảng viên</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {currentUsers.map(nguoidung => (
-                        <tr key={nguoidung.mand}>
-                            <td>{nguoidung.email}</td>
-                            <td>{nguoidung.password}</td>
-                            <td>{nguoidung.hond}</td>
-                            <td>{nguoidung.tennd}</td>
-                            <td>{nguoidung.vaitro}</td>
+                    {currentteachers.map(giangvien => {
+                        return(
+                            <tr key={giangvien.mand}>
+                            <td>{giangvien.email}</td>
+                            <td>{giangvien.password}</td>
+                            <td>{giangvien.hond}</td>
+                            <td>{giangvien.tennd}</td>
+                            <td>{giangvien.magiangvien}</td>
                             <td style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 {/* Nút Xem */}
-                                <button className="btn btn-info btn-sm" onClick={() => console.log(`View user ${nguoidung.mand}`)}>
+                                <button className="btn btn-info btn-sm" onClick={() => console.log(`View Student ${giangvien.mand}`)}>
                                     Xem
                                 </button>
                                 {/* Nút Sửa */}
-                                <button className="btn btn-warning btn-sm" onClick={() => console.log(`Edit user ${nguoidung.mand}`)}>
+                                <button className="btn btn-warning btn-sm" onClick={() => console.log(`Edit Student ${giangvien.mand}`)}>
                                     Sửa
                                 </button>
                                 {/* Nút Xóa */}
@@ -101,8 +103,9 @@ const Users = () => {
                                     Xóa
                                 </button>
                             </td>
-                        </tr>
-                    ))}
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </table>
 
@@ -129,4 +132,4 @@ const Users = () => {
     );
 };
 
-export default Users;
+export default Teachers;
